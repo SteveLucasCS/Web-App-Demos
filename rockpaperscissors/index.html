@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rock Paper Scissors</title>
+  <link rel="icon"href="favicon.ico"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+    * {text-align: center; margin: auto; margin-top: 2em; margin-bottom: 2em; }
+    img {display: none; max-width: 150px;}
+    .button-container {width: 100%; text-align: center;}
+    .user-container {float:left; margin-left: 10%; margin-top: 0;}
+    .opponent-container {float:right; margin-right: 10%; margin-top: 0;}
+    .middle-container{margin: auto; display: block; width: 30%; margin-top: 3em;}
+    .btn {font-size: 1.1em; width: 100px;}
+    #game-status {font-weight: bold; font-size: 2em;}
+  </style>
+</head>
+<body>
+
+  <div class="button-container">
+    <button type="button" class="btn btn-secondary" id="choose-rock" onclick="shoot(this)">Rock</button>
+    <button type="button" class="btn btn-primary" id="choose-paper" onclick="shoot(this)">Paper</button>
+    <button type="button" class="btn btn-dark" id="choose-scissors" onclick="shoot(this)">Scissors</button>
+  </div>
+
+  <div class="user-container">
+    <img id="user-rock" src="images/rock.jpg" alt="">
+    <img id="user-paper" src="images/paper.jpg" alt="">
+    <img id="user-scissors" src="images/scissors.jpg" alt="">
+  </div>
+
+  <div class="opponent-container">
+    <img id="opp-rock" src="images/rock.jpg" alt="">
+    <img id="opp-paper" src="images/paper.jpg" alt="">
+    <img id="opp-scissors" src="images/scissors.jpg" alt="">
+  </div>
+
+  <div class="middle-container">
+    <div class="card" id="status-card" style="width: 18rem;">
+      <div class="card-body">
+        <p class="card-text" id="game-status">You Win</p>
+        <p class="card-text" id="game-score">User: <span id="user-score" style="font-weight: bold;">0
+        </span> --- CPU: <span id="opp-score" style="font-weight: bold;">0</span></p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    var userChoice
+    var oppChoice
+    var userScore
+    var oppScore
+
+    function  random() {
+      //random number min value = 1
+      //random number max value NOT inclusive is 4 (max of 3)
+      var min=1;
+      var max=4;  
+      return Math.floor(Math.random() * (+max - +min)) + +min;
+    }
+  
+    function reset() {
+      $("img").hide();
+      userScore = $("#user-score").html();
+      oppScore = $("#opp-score").html();
+    }
+    function shoot(source){
+      reset();
+      if (source.id == "choose-rock") {
+        $("#user-rock").show();
+        userChoice = 1;
+      }
+      if (source.id == "choose-paper") {
+        $("#user-paper").show();
+        userChoice = 2;
+      }
+      if (source.id == "choose-scissors") {
+        $("#user-scissors").show();
+        userChoice = 3;
+      }
+
+      oppChoice = random();
+
+      if (oppChoice == 1) {
+        $("#opp-rock").show();
+        if (userChoice == 1) {
+          $("#game-status").html("Draw");
+          $("#status-card").css("background-color","rgb(255, 225, 0, 0.7)");
+        }
+        else if (userChoice == 2) {
+          $("#game-status").html("User Wins");
+          $("#status-card").css("background-color","rgb(0, 224, 67)");
+          userScore++;
+          $("#user-score").html(userScore.toString());
+        }
+        else if (userChoice == 3) {
+          $("#game-status").html("Computer Wins");
+          $("#status-card").css("background-color","rgb(237, 0, 0, 0.7)");
+          oppScore++;
+          $("#opp-score").html(oppScore.toString());          
+        }
+      }
+
+      if (oppChoice == 2) {
+        $("#opp-paper").show();
+        if (userChoice == 2){
+          $("#game-status").html("Draw");
+          $("#status-card").css("background-color","rgb(255, 225, 0, 0.7)");
+        }
+        else if (userChoice == 3) {
+          $("#game-status").html("User Wins");
+          $("#status-card").css("background-color","rgb(0, 224, 67)");
+          userScore++;
+          $("#user-score").html(userScore.toString());
+        }
+        else if (userChoice == 1) {
+          $("#game-status").html("Computer Wins");
+          $("#status-card").css("background-color","rgb(237, 0, 0, 0.7)");
+          oppScore++;
+          $("#opp-score").html(oppScore.toString());
+        }
+      }
+
+      if (oppChoice == 3) {
+        $("#opp-scissors").show();
+        if (userChoice == 3) {
+          $("#game-status").html("Draw");
+          $("#status-card").css("background-color","rgb(255, 225, 0, 0.7)");
+        }
+        else if (userChoice == 1) {
+          $("#game-status").html("User Wins");
+          $("#status-card").css("background-color","rgb(0, 224, 67)");
+          userScore++;
+          $("#user-score").html(userScore.toString());
+        }
+        else if (userChoice == 2) {
+          $("#game-status").html("Computer Wins");
+          $("#status-card").css("background-color","rgb(237, 0, 0, 0.7)");
+          oppScore++;
+          $("#opp-score").html(oppScore.toString());
+        }
+      }
+    }
+
+
+  </script>
+
+</body>
+</html>
